@@ -2,6 +2,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from .extensions import db
 
 class Task(db.Model):
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     priority = db.Column(db.String(10), nullable=False)

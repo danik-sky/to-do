@@ -13,19 +13,20 @@ def get_user_by_username(username):
     user = db.session.scalar(query)
     return user
 
-def create_task(title, priority, deadline=None):
-    task = Task(title=title, priority=priority, deadline=deadline)
+def create_task(title, priority, user_id, deadline=None):
+    task = Task(user_id=user_id, title=title, priority=priority, deadline=deadline)
     db.session.add(task)
     db.session.commit()
     return task
 
-def get_all_tasks():
-    query = db.select(Task).order_by(Task.id)
+def get_all_tasks(user_id):
+    query = db.select(Task).order_by(Task.id).where(Task.user_id == user_id)
     tasks = db.session.scalars(query).all()
     return tasks
 
-def get_task(task_id):
-    task = db.session.get(Task, task_id)
+def get_task(task_id, user_id):
+    query = db.select(Task).where(Task.id == task_id, Task.user_id == user_id)
+    task = db.session.scalar(query)
     return task
 
 def mark_done(task):
