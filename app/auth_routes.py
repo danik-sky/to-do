@@ -1,4 +1,4 @@
-from flask import Blueprint, request, session
+from flask import Blueprint, request, session, render_template
 from . import crud
 
 bp = Blueprint("auth", __name__)
@@ -19,6 +19,10 @@ def registration():
         return {"error": "username is already in use"}, 409
     user = crud.create_user(username, password)
     return user.to_dict(), 201
+
+@bp.route("/login")
+def login_page():
+    return render_template("login.html")
 
 @bp.route("/login", methods=["POST"])
 def login():

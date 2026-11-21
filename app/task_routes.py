@@ -1,12 +1,18 @@
-from flask import Blueprint, request, session
+from flask import Blueprint, request, session, render_template, redirect, url_for
 from datetime import datetime
 from . import crud
 
 bp = Blueprint("tasks", __name__)
 
+@bp.route("/")
+def index():
+    return render_template("tasks.html")
+
 @bp.before_request
 def require_login():
     if "user_id" not in session:
+        if request.endpoint == "tasks.index":
+            return redirect(url_for("auth.login_page"))
         return {"error": "login or register first"}, 401
 
 @bp.route("/tasks")

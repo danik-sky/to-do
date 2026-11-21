@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Мои задачи{% endblock %}
+
+{% block content %}
+    <h1>Мои задачи</h1>
+    <button id="logout-btn">Выйти</button>
+    <h2>Новая задача</h2>
+    <input id="title" placeholder="Название">
+    <select id="priority">
+        <option value="low">низкий</option>
+        <option value="medium">средний</option>
+        <option value="high">высокий</option>
+    </select>
+    <input id="deadline" type="date">
+    <button id="create-btn">Создать</button>
+    <p id="message"></p>
+    <h2>Список</h2>
+    <ul id="task-list"></ul>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='tasks.js') }}"></script>
+{% endblock %}
