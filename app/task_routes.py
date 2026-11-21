@@ -19,8 +19,8 @@ def get_one_task(task_id):
 @bp.route("/create", methods = ["POST"])
 def create():
     data = request.get_json(silent=True)
-    if not data:
-        return {"error": "data is None"}, 400
+    if not isinstance(data, dict):
+        return {"error": "Bad request for create"}, 400
     title = data.get("title")
     if (not isinstance(title, str)) or (title.strip()==""):
         return {"error": "title not correct"}, 400

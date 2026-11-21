@@ -1,5 +1,17 @@
 from .extensions import db
-from .models import Task
+from .models import Task, User
+
+def create_user(username, password):
+    user = User(username=username)
+    user.set_password(password)
+    db.session.add(user)
+    db.session.commit()
+    return user
+
+def get_user_by_username(username):
+    query = db.select(User).where(User.username == username)
+    user = db.session.scalar(query)
+    return user
 
 def create_task(title, priority, deadline=None):
     task = Task(title=title, priority=priority, deadline=deadline)
